@@ -1,9 +1,18 @@
-chrome.runtime.onStartup.addListener(() => openTabs);
+chrome.runtime.onStartup.addListener(() => {
+  openTabs();
+});
 const openTabs = () => {
   const tabList = [];
   chrome.storage.sync.get("tabs", (items) => {
-    const tabs = [...items.tabs];
-    tabs.reverse().forEach((x) => {
+    if (!items.tabs) {
+      return chrome.storage.sync.set(
+        {
+          tabs: [],
+        },
+        () => {}
+      );
+    }
+    items.tabs.reverse().forEach((x) => {
       chrome.tabs.create(
         {
           index: 0,
@@ -11,7 +20,7 @@ const openTabs = () => {
         },
         (tab) => {
           tabList.push(tab);
-          if (tabList.length === tabs.length) {
+          if (tabList.length === items.tabs.length) {
             chrome.tabs.group(
               {
                 tabIds: tabList.map((x) => x.id),
