@@ -3,7 +3,7 @@ chrome.runtime.onStartup.addListener(() => {
 });
 const openTabs = () => {
   const tabList = [];
-  chrome.storage.sync.get("tabs", (items) => {
+  chrome.storage.sync.get(["tabs", "collapsed"], (items) => {
     if (!items.tabs) {
       return chrome.storage.sync.set(
         {
@@ -17,6 +17,7 @@ const openTabs = () => {
         {
           index: 0,
           url: x,
+          active: false,
         },
         (tab) => {
           tabList.push(tab);
@@ -26,6 +27,9 @@ const openTabs = () => {
                 tabIds: tabList.map((x) => x.id),
               },
               (group) => {
+                chrome.tabGroups.update(group, {
+                  collapsed: items.collapsed,
+                });
                 console.log(group);
               }
             );
