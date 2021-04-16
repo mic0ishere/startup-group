@@ -10,6 +10,6 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "tabGroups"],
   "minimum_chrome_version": "88"
 }
