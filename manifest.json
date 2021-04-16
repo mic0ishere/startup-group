@@ -1,0 +1,15 @@
+{
+  "name": "Startup Group",
+  "options_ui": {
+    "page": "assets/options.html",
+    "open_in_tab": true
+  },
+  "manifest_version": 3,
+  "description": "Extension which opens pages in a group on startup",
+  "version": "1.0.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "storage"],
+  "minimum_chrome_version": "88"
+}
